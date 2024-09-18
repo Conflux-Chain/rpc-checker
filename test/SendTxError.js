@@ -140,7 +140,7 @@ describe("SendTxError", function () {
     });
 
     describe("maxFeePerGas&maxPriorityFeePerGas issue", function() {
-        /* it('priority fee is bigger than max fee', async function() {
+        it('tx underpriced', async function() {
             const { owner } = await getAccount();
 
             const tx = {
@@ -148,19 +148,18 @@ describe("SendTxError", function () {
                 gasLimit: 21000,
                 // gasPrice: parseUnits("20", "gwei"),
                 maxFeePerGas: parseUnits("1", "gwei"),
-                // maxPriorityFeePerGas: parseUnits("21", "gwei"),
+                maxPriorityFeePerGas: parseUnits("1", "gwei"),
                 to: owner.address,
                 value: 1,
                 data: "0x",
                 chainId: 8889
             };
             const fullTx = await owner.populateTransaction(tx);
-            console.log(fullTx);
             let rawTx = await owner.signTransaction(fullTx);
             let res = await rpcClient.send("eth_sendRawTransaction", [rawTx]);
-            expect(res.error.code).to.equal(-32003);
-            expect(res.error.message).to.equal('insufficient funds for transfer');
-        }); */
+            expect(res.error.code).to.equal(-32603);
+            expect(res.error.message).to.equal('transaction underpriced');
+        });
     });
 
     describe("balance issue", function() {
