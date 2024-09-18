@@ -130,3 +130,4 @@ dist
 .pnp.*
 artifacts
 cache
+ignition/deployments
